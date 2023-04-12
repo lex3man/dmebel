@@ -1,0 +1,34 @@
+services:
+  orm:
+    build: ./core/backend/
+    restart: always
+    volumes:
+      - ./core/backend:/usr/src/app
+      - ./core/backend/static:/usr/src/app/static
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - net
+    ports:
+      - 8000:8000
+
+  db:
+    image: postgres:alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=dmebel
+      - POSTGRES_PASSWORD=Dmebel@192168
+      - POSTGRES_DB=main_db
+    networks:
+      - net
+
+volumes:
+  postgres_data:
+
+networks:
+  net:
+    driver: bridge
