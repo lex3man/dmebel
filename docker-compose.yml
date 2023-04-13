@@ -1,4 +1,16 @@
 services:
+  proxy:
+    image: nginx:alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./core/backend/static:/usr/src/app/static
+    ports:
+      - 8080:8080
+    networks:
+      - net
+    depends_on:
+      - orm
+
   orm:
     build: ./core/backend/
     restart: always
@@ -28,6 +40,7 @@ services:
 
 volumes:
   postgres_data:
+
 
 networks:
   net:
