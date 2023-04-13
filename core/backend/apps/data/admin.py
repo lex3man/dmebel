@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import LeadSource, ContactMethod, EmployeeRole, ClientStatus
+from .models import LeadSource, ContactMethod, EmployeeRole, ClientStatus, OrderStatus, ProductionType
 
 
 @admin.register(LeadSource)
@@ -20,3 +20,13 @@ class RoleAdmin(admin.ModelAdmin):
 @admin.register(ClientStatus)
 class StatusAdmin(admin.ModelAdmin):
     list_display = ('caption',)
+
+
+@admin.register(OrderStatus)
+class OrderStatusAdmin(admin.ModelAdmin):
+    list_display = ('caption',)
+
+
+@admin.register(ProductionType)
+class TypeAdmin(admin.ModelAdmin):
+    list_display = ('caption', 'description')

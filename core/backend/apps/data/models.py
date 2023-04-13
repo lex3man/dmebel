@@ -25,6 +25,17 @@ class LeadSource(models.Model):
         verbose_name_plural = 'Источники'
 
 
+class OrderStatus(models.Model):
+    caption = models.CharField(verbose_name="Наименование", max_length=50)
+
+    def __str__(self):
+        return self.caption
+    
+    class Meta:
+        verbose_name = 'Статус заказа'
+        verbose_name_plural = 'Статусы заказа'
+
+
 class ClientStatus(models.Model):
     caption = models.CharField(verbose_name="Наименование", max_length=50)
 
@@ -58,3 +69,13 @@ class AdminRole(models.Model):
         verbose_name_plural = 'Роли'
     
     
+class ProductionType(models.Model):
+    caption = models.CharField(verbose_name="Тип продукции", max_length=150)
+    description = models.TextField(verbose_name="Описание", null=True, blank=True)
+
+    def __str__(self):
+        return self.caption
+    
+    class Meta:
+        verbose_name = 'Тип продукции'
+        verbose_name_plural = 'Типы продукции'
