@@ -17,13 +17,38 @@ class Human(models.Model):
         verbose_name_plural = "Люди"
 
 
-class Admin(Human):
-    pass
+class Admin(models.Model):
+    caption = models.CharField(verbose_name="Наименование", max_length=500)
+    human = models.ForeignKey(Human, verbose_name="Субъект", on_delete=models.CASCADE)
+                              
+    def __str__(self):
+        return self.caption
+
+    class Meta:
+        verbose_name = "Администратор"
+        verbose_name_plural = "Администраторы"
 
 
-class Employee(Human):
-    pass
+class Employee(models.Model):
+    caption = models.CharField(verbose_name="Наименование", max_length=500)
+    human = models.ForeignKey(Human, verbose_name="Субъект", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.caption
+
+    class Meta:
+        verbose_name = "Сотрудник"
+        verbose_name_plural = "Сотрудники"
 
 
-class Client(Human):
-    pass
+class Client(models.Model):
+    caption = models.CharField(verbose_name="Наименование", max_length=500)
+    human = models.ForeignKey(Human, verbose_name="Субъект", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.caption
+
+    class Meta:
+        verbose_name = "Клиент"
+        verbose_name_plural = "Клиенты"
+
