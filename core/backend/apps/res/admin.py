@@ -5,7 +5,7 @@ from .models import Human, Client, Employee, Admin
 @admin.register(Human)
 class HumanAdmin(admin.ModelAdmin):
     list_display = ('caption', 'phone_number')
-    readonly_fields = ('caption',)
+    # readonly_fields = ('caption',)
     # list_filter = ()
     search_fields = ('caption', 'phone_number')
     # actions = []
