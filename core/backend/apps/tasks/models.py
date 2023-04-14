@@ -30,9 +30,10 @@ class CheckPoint(models.Model):
 class Task(models.Model):
     caption = models.CharField(verbose_name="Наименование", max_length=100)
     project = models.ForeignKey(Project, verbose_name="Проект", on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, verbose_name="Заказ", on_delete=models.SET_NULL, null=True)
-    status = models.ForeignKey(TaskStatus, verbose_name="Статус", on_delete=models.SET_NULL, null=True)
-    client = models.ForeignKey(Client, verbose_name="Клиент", on_delete=models.SET_NULL, null=True)
+    checkpoint = models.ForeignKey(CheckPoint, verbose_name="Контрольная точка", on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, verbose_name="Заказ", on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.ForeignKey(TaskStatus, verbose_name="Статус", on_delete=models.SET_NULL, null=True, blank=True)
+    client = models.ForeignKey(Client, verbose_name="Клиент", on_delete=models.SET_NULL, null=True, blank=True)
     init_empl = models.ForeignKey(Employee, related_name="init_empl", verbose_name="Постановщик задачи", on_delete=models.SET_NULL, null=True)
     maker = models.ForeignKey(Employee, related_name="maker", verbose_name="Ответственный", on_delete=models.SET_NULL, null=True)
     deadline = models.DateTimeField(verbose_name="Завершение")
