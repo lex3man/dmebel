@@ -25,6 +25,17 @@ class LeadSource(models.Model):
         verbose_name_plural = 'Источники'
 
 
+class TaskStatus(models.Model):
+    caption = models.CharField(verbose_name="Наименование", max_length=50)
+
+    def __str__(self):
+        return self.caption
+
+    class Meta:
+        verbose_name = 'Статус Задачи'
+        verbose_name_plural = 'Статусы задач'
+
+
 class OrderStatus(models.Model):
     caption = models.CharField(verbose_name="Наименование", max_length=50)
 
