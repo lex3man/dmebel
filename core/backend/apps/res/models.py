@@ -1,5 +1,5 @@
 from django.db import models
-from ..data.models import ClientStatus, EmployeeRole, AdminRole
+from ..data.models import ClientStatus, EmployeeRole, AdminRole, Tag, ContactMethod
 
 
 class Human(models.Model):
@@ -35,6 +35,7 @@ class Employee(models.Model):
     caption = models.CharField(verbose_name="Наименование", max_length=500)
     human = models.ForeignKey(Human, verbose_name="Субъект", on_delete=models.CASCADE)
     role = models.ForeignKey(EmployeeRole, verbose_name="Должность", on_delete=models.SET_NULL, null=True)
+    tag = models.ManyToManyField(Tag, verbose_name="Тэг", blank=True)
     
     def __str__(self):
         return self.caption
@@ -48,8 +49,10 @@ class Client(models.Model):
     caption = models.CharField(verbose_name="Наименование", max_length=500)
     human = models.ForeignKey(Human, verbose_name="Субъект", on_delete=models.CASCADE)
     status = models.ForeignKey(ClientStatus, verbose_name="Статус", on_delete=models.SET_NULL, null=True)
+    method = models.ForeignKey(ContactMethod, verbose_name="Предпочтительный способ связи", on_delete=models.SET_NULL, null=True)
     address = models.CharField(verbose_name="Адрес", max_length=200, null=True, blank=True)
     comments = models.TextField(verbose_name="Комментарии", null=True, blank=True)
+    tag = models.ManyToManyField(Tag, verbose_name="Тэг", blank=True)
     
     def __str__(self):
         return self.caption

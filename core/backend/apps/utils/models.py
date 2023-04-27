@@ -1,5 +1,10 @@
+import subprocess, os, redis, signal
 from django.db import models
 from django.contrib import admin
+
+bots_status_base = redis.ConnectionPool(host='redis', port=6379, db=0)
+bots_status = redis.Redis(connection_pool=bots_status_base, charset="utf-8", decode_responses=True)
+bot_init_script = 'bot/starter.py'
 
 
 class Bot(models.Model):
@@ -12,15 +17,25 @@ class Bot(models.Model):
         return self.caption
 
     @admin.action(description = 'Запустить выбранных ботов')
-    def start(self, request, queryset):
-        for b in queryset:
-            if not b.active:
-                b.active = True
-                b.save()
+    def start(self, _, queryset):
+        for bot in queryset:
+            if not bot.active:
+                process = subprocess.Popen(['python', bot_init_script, bot.tgbot_token])
+                bots_status.set(bot.caption, process.pid)
+                bot.active = True
+                bot.save()
 
     @admin.action(description = 'Остановить выбранных ботов')
-    def stop(self, request, queryset):
-        for b in queryset:
-            if b.active:
-                b.active = False
-                b.save()
+    def stop(self, _, queryset):
+        for bot in queryset:
+            if bot.active:
+                pid = bots_status.get(bot.caption)
+                if pid != None:
+                    os.kill(int(pid), signal.SIGKILL)
+                    bots_status.delete(bot.caption)
+                bot.active = False
+                bot.save()
+
+    class Meta:
+        verbose_name = 'Телеграм бот'
+        verbose_name_plural = 'Телеграм боты'

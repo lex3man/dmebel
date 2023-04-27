@@ -58,8 +58,21 @@ class ClientStatus(models.Model):
         verbose_name_plural = 'Статусы клиента'
 
 
+class EmployeeGroup(models.Model):
+    caption = models.CharField(verbose_name="Наименование", max_length=150)
+    description = models.TextField(verbose_name="Описание")
+
+    def __str__(self):
+        return self.caption
+
+    class Meta:
+        verbose_name = 'Отдел'
+        verbose_name_plural = 'Отделы'
+
+
 class EmployeeRole(models.Model):
     caption = models.CharField(verbose_name="Наименование", max_length=50)
+    group = models.ForeignKey(EmployeeGroup, verbose_name="", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.caption
@@ -90,3 +103,15 @@ class ProductionType(models.Model):
     class Meta:
         verbose_name = 'Тип продукции'
         verbose_name_plural = 'Типы продукции'
+
+
+class Tag(models.Model):
+    caption = models.CharField(verbose_name="Тип продукции", max_length=150)
+    description = models.TextField(verbose_name="Описание", null=True, blank=True)
+    
+    def __str__(self):
+        return self.caption
+    
+    class Meta:
+        verbose_name = 'Тэг'
+        verbose_name_plural = 'Тэги'

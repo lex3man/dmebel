@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -10,7 +9,7 @@ class GetRes(APIView):
         data = {"status": "OK"}
         return Response(data)
 
-    def post(self, request) -> Response:
+    def post(self, _) -> Response:
         data = {"status": "OK"}
         return Response(data)
 

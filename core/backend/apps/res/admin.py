@@ -15,12 +15,13 @@ class HumanAdmin(admin.ModelAdmin):
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('caption', 'status', 'comments')
     # readonly_fields = ()
-    list_filter = ('status',)
+    list_filter = ('status', 'tag')
     search_fields = ('caption', 'human', 'comments')
     # actions = []
     fieldsets = (
             ( 'Клиент', {'fields': ('caption', 'human', 'status')} ),
-            ( 'Дополнительно', {'fields': ('address', 'comments')} ),
+            ( 'Дополнительно', {'fields': ('address', 'comments', 'method')} ),
+            ( 'Тэги', {'fields': ('tag',)} ),
     )
 
 
@@ -28,7 +29,7 @@ class ClientAdmin(admin.ModelAdmin):
 class EmployeeAdmin(admin.ModelAdmin):
     list_display = ('caption', 'role')
     # readonly_fields = ()
-    list_filter = ('role',)
+    list_filter = ('role', 'tag')
     # search_fields = ()
     # actions = []
 

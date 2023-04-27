@@ -5,11 +5,25 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - ./core/backend/static:/usr/src/app/static
     ports:
+      - 8088:8088
       - 8080:8080
     networks:
       - net
     depends_on:
       - orm
+      - site
+
+  site:
+    build: ./core/frontend/
+    restart: always
+    depends_on:
+      - orm
+    volumes:
+      - ./core/frontend:/usr/src/app
+    networks:
+      - net
+    ports:
+      - 8081:8000
 
   orm:
     build: ./core/backend/
@@ -21,10 +35,16 @@ services:
       - .env
     depends_on:
       - db
+      - redis
     networks:
       - net
     ports:
       - 8000:8000
+
+  redis:
+    image: redis
+    networks:
+      - net
 
   db:
     image: postgres:alpine
@@ -40,7 +60,6 @@ services:
 
 volumes:
   postgres_data:
-
 
 networks:
   net:
