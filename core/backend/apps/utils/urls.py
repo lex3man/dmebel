@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import Bot, BotConf
+from .views import Bots, BotConf
 
 urlpatterns = [
-    path('bot/', Bot.as_view(), name='bot'),
-    path('bot/<str:caption>', BotConf.as_view(), name='bot_conf')
+    path('bot/', Bots.as_view(), name='bot'),
+    path('bot/<str:pk>', BotConf.as_view(), name='bot_conf')
 ]
 

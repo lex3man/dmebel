@@ -8,8 +8,13 @@ bot_init_script = 'bot/starter.py'
 
 
 class Bot(models.Model):
-    caption = models.CharField(verbose_name = 'Наименование бота', max_length=50)
-    tgbot_token = models.CharField(verbose_name = 'Telegram API токен', max_length=50)
+    TYPE = [
+            ('tg', 'Телеграм'),
+            ('vk', 'Вконтакте')
+            ]
+    caption = models.CharField(verbose_name='Наименование бота', max_length=50)
+    bot_type = models.CharField(verbose_name='Тип бота', choices=TYPE, max_length=3, default='tg')
+    tgbot_token = models.CharField(verbose_name = 'Bot API токен', max_length=50)
     start_message = models.TextField(verbose_name = 'Текст приветственного сообщения на команду "/start"')
     active = models.BooleanField(verbose_name='Работает', default=False)
     
@@ -37,5 +42,5 @@ class Bot(models.Model):
                 bot.save()
 
     class Meta:
-        verbose_name = 'Телеграм бот'
-        verbose_name_plural = 'Телеграм боты'
+        verbose_name = 'Бот'
+        verbose_name_plural = 'Боты'

@@ -5,7 +5,7 @@ from .models import Bot
 from .serializers import BotSerializer
 
 
-class Bot(APIView):
+class Bots(APIView):
 
     def get(self, _) -> Response:
         data = {"status": "OK"}

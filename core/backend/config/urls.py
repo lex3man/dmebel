@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import VKrequest
 
 admin.site.site_header = 'Админка Системы ДоброМебель'
 admin.site.index_title = 'Техническое администрирование'
@@ -23,5 +24,5 @@ admin.site.index_title = 'Техническое администрирован�
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('apps.urls')),
-
+    path('bot/callback/', VKrequest.as_view()),
 ]
